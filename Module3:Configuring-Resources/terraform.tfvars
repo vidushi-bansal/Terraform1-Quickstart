@@ -6,7 +6,7 @@ key_name = "name_of_existing_key_pair"
 
 private_key_path = "path/key.pem"
 
-bucket_name_prefix = "Ingo"
+bucket_name_prefix = "ingo"
 
 environment = "develop"
 
