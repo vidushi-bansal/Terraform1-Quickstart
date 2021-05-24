@@ -56,7 +56,7 @@ The function **cidrsubnet** takes:
 first argument as the network range,  
 second argument is add this number of bits to the mask so the 16 turns to 24,    
 third argument is based off breaking the large network address into bunch of subnets, which subnet is required.  
-
+  
 2. To lookup values in a map  
 Lets create a map of AMIs  
 ```
@@ -69,13 +69,14 @@ variable "amis" {
 }
 ami = lookup(var.amis, "us-east-1", error)  
 ```
+  
 We can use the **lookup** function to retrieve the value from a map. The third argument of lookup is a default value, if it does not find that key within a map.
-
+  
 ## Terraform Console
 Type in **terraform console** in a terraform initated directory.  
 terraform console    
 > min(23,89,32,13)  
-
+  
 ## Terraform Providers
 Terraform providers allows you to interact with things like infrastructure as a service, platform as a service, or even software as a service. Providers are a collection of defined resources and data sources. We can create multiple instances of the same provider in our configuration.
 ### Example:
@@ -98,5 +99,32 @@ resource "azurerm_resource_group" "azure_example" {
     name = "resource-group"
     location = "East US"
     provider = azurerm.arm1
+}
+```
+  
+## Resource Arguments
+There are a number of different arguments you can specify within a resource that help you with more complex complications.  
+1. depends_on: You can add a depends_on argument and then give a list of other resources that this resource is dependent on to make sure that Terraform creates things in the right order. Terraform creates things in the right order.  
+2. count: Count is a way to implement a resource loop within Terraform configurations.  
+3. for_each: You submit a map with a list of key-value pairs, and for each key-value pair within that map, it will create one of the resources.  
+4. provider: There is a provider argument where you can specify which provider should be used for the creation of this resource if its not obvious to Terraform already.  
+  
+### Example
+```
+resource "aws_instance" "instance_example" {
+  count = 2
+  tags {
+    Name = "customer=${count.index}"
+  }
+  depends_on = [aws_iam_role_policy.allow_S3]
+}
+resource "aws_s3_bucket" "s3_bucket" {
+  for each = {
+    public_bucket = "public"
+    private_bucket = "private"
+  }
+  bucket = "${each.key}-${var.bucket_suffix}"
+  acl = each.value
+
 }
 ```
