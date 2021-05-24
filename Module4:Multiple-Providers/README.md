@@ -104,10 +104,10 @@ resource "azurerm_resource_group" "azure_example" {
   
 ## Resource Arguments
 There are a number of different arguments you can specify within a resource that help you with more complex complications.  
-1. depends_on: You can add a depends_on argument and then give a list of other resources that this resource is dependent on to make sure that Terraform creates things in the right order. Terraform creates things in the right order.  
-2. count: Count is a way to implement a resource loop within Terraform configurations.  
-3. for_each: You submit a map with a list of key-value pairs, and for each key-value pair within that map, it will create one of the resources.  
-4. provider: There is a provider argument where you can specify which provider should be used for the creation of this resource if its not obvious to Terraform already.  
+1. **depends_on:** You can add a depends_on argument and then give a list of other resources that this resource is dependent on to make sure that Terraform creates things in the right order. Terraform creates things in the right order.  
+2. **count:** Count is a way to implement a resource loop within Terraform configurations.  
+3. **for_each:** You submit a map with a list of key-value pairs, and for each key-value pair within that map, it will create one of the resources.  
+4. **provider:** There is a provider argument where you can specify which provider should be used for the creation of this resource if its not obvious to Terraform already.  
   
 ### Example
 ```
