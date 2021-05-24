@@ -5,11 +5,11 @@ The image below represents the above mentioned scenario
 ![Scenario](https://github.com/vidushi-bansal/Terraform1-Quickstart/blob/main/Module2:Networking-Resources/Scenario.png)
 
 ### Resources Created:
-VPC
-Internet Gateway
-Subnets
-Route Tables
-Route Table Asssociation
-Security Groups
-Load Balancer
-EC2 Instances
+VPC  
+Internet Gateway  
+Subnets  
+Route Tables  
+Route Table Asssociation  
+Security Groups  
+Load Balancer  
+EC2 Instances  
