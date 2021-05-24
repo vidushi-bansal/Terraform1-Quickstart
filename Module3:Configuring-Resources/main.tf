@@ -5,7 +5,7 @@ locals {
     Environment = var.environment
   }
 
-  s3_bucket_name = "${var.bucket_name_prefix}-${var.environment_tag}-${random_integer.rand.result}"
+  s3_bucket_name = "${var.bucket_name_prefix}-${var.environment}-${random_integer.rand.result}"
 }
 
 #Random ID to use in bucket name for S3
@@ -20,13 +20,13 @@ resource "random_integer" "rand" {
 resource "aws_vpc" "vpc" {
   cidr_block = var.network_address_space
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-vpc" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-vpc" })
 }
 # Creating an Internet Gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-igw" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-igw" })
 
 }
 
@@ -37,7 +37,7 @@ resource "aws_subnet" "subnet1" {
   map_public_ip_on_launch = "true"
   availability_zone       = data.aws_availability_zones.available.names[0]
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-subnet1" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-subnet1" })
 
 }
 
@@ -47,7 +47,7 @@ resource "aws_subnet" "subnet2" {
   map_public_ip_on_launch = "true"
   availability_zone       = data.aws_availability_zones.available.names[1]
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-subnet2" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-subnet2" })
 
 }
 
@@ -61,7 +61,7 @@ resource "aws_route_table" "rtb" {
     gateway_id = aws_internet_gateway.igw.id
   }
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-rtb" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-rtb" })
 
 }
 # Associating the route table with the subnets
@@ -97,7 +97,7 @@ resource "aws_security_group" "elb-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-elb" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-elb" })
 
 }
 
@@ -130,7 +130,7 @@ resource "aws_security_group" "nginx-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-nginx" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-nginx" })
 
 }
 
@@ -149,7 +149,7 @@ resource "aws_elb" "web" {
     lb_protocol       = "http"
   }
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-elb" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-elb" })
 
 }
 
@@ -219,7 +219,7 @@ EOF
     ]
   }
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-nginx1" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-nginx1" })
 
 }
 
@@ -286,7 +286,7 @@ EOF
     ]
   }
 
-  tags = merge(local.common_tags, { Name = "${var.environment_tag}-nginx2" })
+  tags = merge(local.common_tags, { Name = "${var.environment}-nginx2" })
 
 }
 
@@ -347,7 +347,7 @@ EOF
     # To delete the S3 bucket with Terraform, irrespective of the fact that it has data or not
     force_destroy = true
 
-    tags = merge(local.common_tags, { Name = "${var.environment_tag}-web-bucket" })
+    tags = merge(local.common_tags, { Name = "${var.environment}-web-bucket" })
 
   }
   # To add website data in s3 bucket
