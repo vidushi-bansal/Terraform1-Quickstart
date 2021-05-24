@@ -25,7 +25,7 @@ Provisioners can be local, that executes on your local machine, or remote, that 
 Provisioners can fire off either during creation(for example, to run a script or add some files to your ec2 instances), or destruction of an object( for example, graceful termination of the processes).  
 We can add multiple provisioners to a particular resource.  
 ### Example:  
-Get files from your local machine to a remote resource thats being created.  
+**Get files from your local machine to a remote resource thats being created.**  
   
 provisioner "file"{  
   connection {  
@@ -38,12 +38,14 @@ provisioner "file"{
   destination = "/path/to/file.txt"  
 }  
   
-Local Exec Provisioner:  
+**Local Exec Provisioner:**  
+  
 provisioner "local-exec"{  
   command = "local command here"  
 }  
   
-Remote Exec Provisioner:  
+**Remote Exec Provisioner:**  
+  
 provisioner "local-exec"{  
   script = ["list" , "of" ,"remote" , "scripts"]    
 }  
