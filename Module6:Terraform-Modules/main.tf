@@ -121,8 +121,8 @@ resource "aws_instance" "nginx" {
 
   provisioner "file" {
     content     = <<EOF
-access_key = "AKIAWI6XNAMPZKGY7MWQ"
-secret_key = "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"
+access_key = 
+secret_key = 
 use_https = True
 bucket_location = US
 EOF
