@@ -49,3 +49,9 @@ provisioner "local-exec"{
 provisioner "local-exec"{  
   script = ["list" , "of" ,"remote" , "scripts"]    
 }  
+## Commands used
+```bash
+terraform init
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+```
