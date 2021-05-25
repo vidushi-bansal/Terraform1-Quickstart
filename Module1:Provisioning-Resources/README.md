@@ -27,3 +27,9 @@ Once we have connected to the provider, we may want to get some information abou
 We would want to create several resources according to our use case. For that we use resource. A resource takes several arguments and those arguments can either be hard coded or passed as a variable or a data source.
 #### Output:
 You might want to get some information out of your deployment. For example, a public IP  of your server. In Terraform, outputs serve that function admirably.
+## Commands used
+```bash
+terraform init
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+```
