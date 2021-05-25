@@ -53,11 +53,11 @@ cidr_block = lookup(var.cidr, var.environment)
 ```
 ## Working with Multiple Environments
 We can easily work in multiple environments. Our environments are going to have more in common than the differences between them. Development will be very close to UAT, and everything that we test or validate in UAT would be very close to production. It also means that it is very important to have some abstaction in our configurations, in which we can apply different values and make our code more reusable. One of the ways to create multiple environments in terraform is using some functionality called Terraform Workspaces.
-**Decisions you have to make while working with multiple environments**
-**1. State Management:** Where is your state going to be stored and how will the state of each environment will be managed individually?
-**2. Variables Data:** Where to store your variable's data?
-**3. Credentials Management:** You are not necessarily going to use the same credentials for all three environments. How will the credentials for each environment be managed individually and where will they be stored?
-**4. Complexity and Overhead:** There is a balance to be struck between the complexity of our configuration and the amount of administrative overhead there is to maintain the configuration. So you could go with something that is relatively simple, but requires a significant amount of administrative overhead going forward, or make something that's fairly complex but also dynamic and robust so when you want to add or edit an environment, there is not a whole lot of administrative overhead to do so. 
+**Decisions you have to make while working with multiple environments**  
+**1. State Management:** Where is your state going to be stored and how will the state of each environment will be managed individually?  
+**2. Variables Data:** Where to store your variable's data?  
+**3. Credentials Management:** You are not necessarily going to use the same credentials for all three environments. How will the credentials for each environment be managed individually and where will they be stored?  
+**4. Complexity and Overhead:** There is a balance to be struck between the complexity of our configuration and the amount of administrative overhead there is to maintain the configuration. So you could go with something that is relatively simple, but requires a significant amount of administrative overhead going forward, or make something that's fairly complex but also dynamic and robust so when you want to add or edit an environment, there is not a whole lot of administrative overhead to do so.   
   
 **Example to maintain state file of different environments**
 ![Example](https://github.com/vidushi-bansal/Terraform1-Quickstart/blob/main/Module5:Terraform-Workspaces/Example.png)  
