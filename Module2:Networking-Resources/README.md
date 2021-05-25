@@ -13,3 +13,9 @@ Route Table Asssociation
 Security Groups  
 Load Balancer  
 EC2 Instances  
+## Commands used
+```bash
+terraform init
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+```
