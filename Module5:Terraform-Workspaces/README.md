@@ -85,21 +85,20 @@ using our main config and the terraform.tfvars. Rather than manually managing th
 ```bash
 terraform init
 terraform workspace new Development
-terraform plan
-terraform apply
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
 
 terraform destroy
 
 terraform workspace new UAT
-terraform plan
-terraform apply
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
 
 terraform destroy
 
 terraform workspace new Production
-terraform plan
-terraform apply
-
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
 terraform destroy 
 ```
 To switch to other workspace    
