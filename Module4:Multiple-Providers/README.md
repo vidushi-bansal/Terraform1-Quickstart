@@ -128,3 +128,9 @@ resource "aws_s3_bucket" "s3_bucket" {
 
 }
 ```
+## Commands used
+```bash
+terraform init
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+```
