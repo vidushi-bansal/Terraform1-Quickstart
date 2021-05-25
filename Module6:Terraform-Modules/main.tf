@@ -121,8 +121,8 @@ resource "aws_instance" "nginx" {
 
   provisioner "file" {
     content     = <<EOF
-access_key =
-secret_key =
+access_key = "AKIAWI6XNAMPZKGY7MWQ"
+secret_key = "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"
 use_https = True
 bucket_location = US
 EOF
@@ -173,7 +173,7 @@ EOF
 module "bucket" {
   name = local.s3_bucket_name
 
-  source      = ".\\Modules\\s3"
+  source      = "./Modules/s3"
   common_tags = local.common_tags
 }
 
