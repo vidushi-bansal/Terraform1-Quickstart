@@ -1,15 +1,3 @@
-locals {
-  env_name = lower(terraform.workspace)
-
-  common_tags = {
-    Owner = var.owner
-    Environment = local.env_name
-  }
-
-  s3_bucket_name = "${var.bucket_name_prefix}-${local.env_name}-${random_integer.rand.result}"
-
-
-}
 #Random ID
 resource "random_integer" "rand" {
   min = 10000
@@ -17,20 +5,22 @@ resource "random_integer" "rand" {
 }
 
 # NETWORKING #
+# Creating a VPC
 resource "aws_vpc" "vpc" {
+  # We are defining our cidr block from the network range defined in terraform.workspace key.
   cidr_block = var.network_address_space[terraform.workspace]
 
   tags = merge(local.common_tags, { Name = "${local.env_name}-vpc" })
 
 }
-
+#Creating an Internet Gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, { Name = "${local.env_name}-igw" })
 
 }
-
+#Creating subnets
 resource "aws_subnet" "subnet" {
   count                   = var.subnet_count[terraform.workspace]
   cidr_block              = cidrsubnet(var.network_address_space[terraform.workspace], 8, count.index)
@@ -43,6 +33,7 @@ resource "aws_subnet" "subnet" {
 }
 
 # ROUTING #
+#Creating a Route Table
 resource "aws_route_table" "rtb" {
   vpc_id = aws_vpc.vpc.id
 
@@ -53,7 +44,7 @@ resource "aws_route_table" "rtb" {
 
   tags = merge(local.common_tags, { Name = "${local.env_name}-rtb" })
 }
-
+#Associating that route table with the subnets
 resource "aws_route_table_association" "rta-subnet" {
   count          = var.subnet_count[terraform.workspace]
   subnet_id      = aws_subnet.subnet[count.index].id
@@ -61,6 +52,7 @@ resource "aws_route_table_association" "rta-subnet" {
 }
 
 # SECURITY GROUPS #
+#Creating security group for load balancer
 resource "aws_security_group" "elb-sg" {
   name   = "nginx_elb_sg"
   vpc_id = aws_vpc.vpc.id
@@ -84,7 +76,7 @@ resource "aws_security_group" "elb-sg" {
   tags = merge(local.common_tags, { Name = "${local.env_name}-elb-sg" })
 }
 
-# Nginx security group 
+# Creating security group for NGINX
 resource "aws_security_group" "nginx-sg" {
   name   = "nginx_sg"
   vpc_id = aws_vpc.vpc.id
@@ -116,7 +108,8 @@ resource "aws_security_group" "nginx-sg" {
   tags = merge(local.common_tags, { Name = "${local.env_name}-nginx-sg" })
 }
 
-# LOAD BALANCER #
+#Creating LOAD BALANCER 
+
 resource "aws_elb" "web" {
   name = "${local.env_name}-nginx-elb"
 
@@ -157,7 +150,6 @@ resource "aws_instance" "nginx" {
     content     = <<EOF
 access_key =
 secret_key =
-security_token =
 use_https = True
 bucket_location = US
 EOF
@@ -192,10 +184,10 @@ EOF
       "sudo cp /home/ec2-user/nginx /etc/logrotate.d/nginx",
       "sudo pip install s3cmd",
       "s3cmd get s3://${aws_s3_bucket.web_bucket.id}/website/index.html .",
-      "s3cmd get s3://${aws_s3_bucket.web_bucket.id}/website/Globo_logo_Vert.png .",
+      "s3cmd get s3://${aws_s3_bucket.web_bucket.id}/website/Ingo.png .",
       "sudo rm /usr/share/nginx/html/index.html",
       "sudo cp /home/ec2-user/index.html /usr/share/nginx/html/index.html",
-      "sudo cp /home/ec2-user/Globo_logo_Vert.png /usr/share/nginx/html/Globo_logo_Vert.png",
+      "sudo cp /home/ec2-user/Ingo.png /usr/share/nginx/html/Ingo.png",
       "sudo logrotate -f /etc/logrotate.conf"
 
     ]
@@ -272,7 +264,7 @@ resource "aws_s3_bucket_object" "website" {
 
 resource "aws_s3_bucket_object" "graphic" {
   bucket = aws_s3_bucket.web_bucket.bucket
-  key    = "/website/Globo_logo_Vert.png"
-  source = "./Globo_logo_Vert.png"
+  key    = "/website/Ingo.png"
+  source = "./Ingo.png"
 
 }
