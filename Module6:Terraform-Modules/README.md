@@ -51,3 +51,33 @@ resource "aws_s3_bucket_object" {
     [...]
 } 
 ```  
+## Commands used
+```bash
+terraform init
+terraform workspace new Development
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+
+terraform destroy
+
+terraform workspace new UAT
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+
+terraform destroy
+
+terraform workspace new Production
+terraform plan -out file.tfplan
+terraform apply "file.tfplan"
+
+terraform destroy 
+```
+To switch to other workspace    
+```bash
+terraform workspace select <WORKSPACE-NAME>
+```
+To delete a worspace:  
+(You will have to switch to the other workspace to delete the current workspace)  
+```bash
+terraform workspace delete <WORKSPACE-NAME>
+```
