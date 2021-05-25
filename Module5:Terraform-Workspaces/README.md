@@ -68,7 +68,10 @@ terraform plan -state=".\dev\dev.state"
             -var-file=".\dev\dev.tfvars"  
 ```
 ## Terraform Workspaces
-Another potential way to maintain different environments is via workspace. In workspaces, we still have a primary directory where our main config and terraform.tfvars exist. Workspace will manage the state for us. It creates a terraform.tfstate.d directory and places the state file in child directories within that main directory. When we want to create a new workspace, we can simply run: 
+Another potential way to maintain different environments is via workspace. In workspaces, we still have a primary directory where our main config and terraform.tfvars exist. Workspace will manage the state for us. It creates a terraform.tfstate.d directory and places the state file in child directories within that main directory.  
+ ![Worspace](https://github.com/vidushi-bansal/Terraform1-Quickstart/blob/main/Module5:Terraform-Workspaces/Workspace.png)  
+
+When we want to create a new workspace, we can simply run: 
 ```bash 
 terraform workspace new develop
 ```  
