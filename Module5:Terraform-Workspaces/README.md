@@ -79,4 +79,35 @@ Terraform will create that workspace and switch over to that context. Then we ca
 ```bash
 terraform plan
 ```    
-using our main config and the terraform.tfvars. Rather than manually managing the states, terraform will manage the state for us.
+using our main config and the terraform.tfvars. Rather than manually managing the states, terraform will manage the state for us.  
+  
+## Commands used
+```bash
+terraform init
+terraform workspace new Development
+terraform plan
+terraform apply
+
+terraform destroy
+
+terraform workspace new UAT
+terraform plan
+terraform apply
+
+terraform destroy
+
+terraform workspace new Production
+terraform plan
+terraform apply
+
+terraform destroy 
+```
+To switch to other workspace    
+```bash
+terraform workspace select <WORKSPACE-NAME>
+```
+To delete a worspace:  
+(You will have to switch to the other workspace to delete the current workspace)  
+```bash
+terraform workspace delete <WORKSPACE-NAME>
+```
